@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.barbershop'
+version = '1.0.0'
+sourceCompatibility = '17'
+
+
+configurations {
+	compileOnly {
+		extendsFrom(configurations.annotationProcessor.get())
+	}
+}
+
+repositories {
+    mavenCentral()
+}
+
+var mapStructVersion = "1.6.3"
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.postgresql:postgresql'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.projectlombok:lombok'
+    implementation("org.mapstruct:mapstruct:$mapStructVersion")
+
+    compileOnly("org.projectlombok:lombok")
+
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    runtimeOnly("org.postgresql:postgresql")
+
+    annotationProcessor("org.mapstruct:mapstruct-processor:$mapStructVersion")
+	annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
+	annotationProcessor("org.projectlombok:lombok")
+    
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.named('bootJar') {
+    mainClass = 'com.barbershop.barber_shop_api.BarberShopApiApplication'
+}
+
+tasks.named('jar') {
+    enabled = false
+}
